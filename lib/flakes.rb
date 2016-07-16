@@ -1,47 +1,41 @@
-class Flake
+class Flake < ActiveJob::Base
+  # alias ActiveJob::Core#initialize before it is overwritten by ActiveModel::Model
+  alias_method :active_job_initialize, :initialize
 
-  public
+  include ActiveModel::Model
 
-  def self.input_params
-    @input_params
+  def self.execute_later(*args)
+    # initialize ActiveJob::Core only when Flake is enqueued to prevent conflics whith ActiveModel
+    flake = new
+    flake.send(:active_job_initialize, *args)
+    flake.enqueue
+  end
+
+  singleton_class.send(:alias_method, :perform_later, :execute_later)
+
+  def perform(args = {})
+    args.each { |key, value| self.instance_variable_set(:"@#{key}", value) }
+    execute
+  end
+
+  def execute(*args)
+    raise NotImplementedError.new("no `execute` method defined for #{self.class}")
   end
 
   def on_success(&callback)
     @success = callback
-    return self
+    self
   end
 
   def on_failure(&callback)
     @failure = callback
-    return self
+    self
   end
 
   private
 
-  attr_reader :repo, :params
-
-  def self.default_repo(default_repo)
-    define_method :initialize do |params = nil, repo = default_repo|
-      @repo = repo
-
-      input_params = self.class.input_params
-
-      if input_params.present?
-        input_params.each do |name|
-          instance_variable_set("@#{name}", params[name])
-          self.class.send(:attr_reader, name)
-        end
-      end
-
-    end
-  end
-
-  def self.allow_params(*params)
-    @input_params = params
-  end
-
   def success(*args)
-    @success ||= Proc.new { |args| args }
+    @success ||= default_success
     @success.call(*args)
   end
 
@@ -50,8 +44,12 @@ class Flake
     @failure.call(*args)
   end
 
+  def default_success
+    proc { true }
+  end
+
   def default_failure
-    Proc.new do |args|
+    proc do |args|
       obj = args || self
       raise obj.inspect
     end
