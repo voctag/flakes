@@ -14,12 +14,12 @@ class Flake < ActiveJob::Base
   singleton_class.send(:alias_method, :perform_later, :execute_later)
 
   def perform(args = {})
-    args.each { |key, value| self.instance_variable_set(:"@#{key}", value) }
+    args.each { |key, value| instance_variable_set(:"@#{key}", value) }
     execute
   end
 
-  def execute(*args)
-    raise NotImplementedError.new("no `execute` method defined for #{self.class}")
+  def execute(*)
+    raise NotImplementedError, "no `execute` method defined for #{self.class}"
   end
 
   def on_success(&callback)
