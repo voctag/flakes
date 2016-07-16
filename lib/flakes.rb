@@ -1,8 +1,11 @@
+require "active_job"
+require "active_model"
+
 class Flake < ActiveJob::Base
   # alias ActiveJob::Core#initialize before it is overwritten by ActiveModel::Model
   alias_method :active_job_initialize, :initialize
 
-  include ActiveModel::Model
+  include ::ActiveModel::Model
 
   def self.execute_later(*args)
     # initialize ActiveJob::Core only when Flake is enqueued to prevent conflics whith ActiveModel
