@@ -2,6 +2,9 @@ require "active_job"
 require "active_model"
 
 class Flake < ActiveJob::Base
+  class Error < StandardError
+  end
+
   # alias ActiveJob::Core#initialize before it is overwritten by ActiveModel::Model
   alias_method :active_job_initialize, :initialize
 
@@ -37,14 +40,30 @@ class Flake < ActiveJob::Base
 
   private
 
+  def with_valid_params
+    if block_given? && valid?
+      ApplicationRecord.transaction do
+        yield
+      end
+    else
+      failure(errors)
+    end
+  end
+
   def success(*args)
-    @success ||= default_success
-    @success.call(*args)
+    if args.size == 1 && args.first.respond_to?(:errors) && args.first.errors.present?
+      failure(args.first.errors)
+    else
+      @success ||= default_success
+      @success.call(*args)
+      return args.first
+    end
   end
 
   def failure(*args)
     @failure ||= default_failure
     @failure.call(*args)
+    false
   end
 
   def default_success
