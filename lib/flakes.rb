@@ -73,7 +73,10 @@ class Flake < ActiveJob::Base
   def default_failure
     proc do |args|
       obj = args || self
-      raise obj.inspect
+
+      raise(Error, obj.errors.full_messages) if obj.respond_to?(:errors)
+      raise(Error, obj.full_messages) if obj.is_a?(ActiveModel::Errors)
+      raise(Error, obj.inspect)
     end
   end
 end
