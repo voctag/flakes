@@ -10,6 +10,10 @@ class Flake < ActiveJob::Base
 
   include ::ActiveModel::Model
 
+  def self.execute(args = {})
+    new(args).execute
+  end
+
   def self.execute_later(*args)
     # initialize ActiveJob::Core only when Flake is enqueued to prevent conflics whith ActiveModel
     flake = new
