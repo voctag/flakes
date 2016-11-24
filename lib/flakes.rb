@@ -14,11 +14,19 @@ class Flake < ActiveJob::Base
     new(args).execute
   end
 
-  def self.execute_later(*args)
+  def self.execute_later(args = {})
+    options = {}
+    options[:wait] = args.delete(:wait) if args.key?(:wait)
+
     # initialize ActiveJob::Core only when Flake is enqueued to prevent conflics whith ActiveModel
     flake = new
-    flake.send(:active_job_initialize, *args)
-    flake.enqueue
+    flake.send(:active_job_initialize, args)
+
+    if queue_adapter.class.name.demodulize == "ResqueAdapter"
+      flake.enqueue(options)
+    else
+      flake.enqueue
+    end
   end
 
   singleton_class.send(:alias_method, :perform_later, :execute_later)
