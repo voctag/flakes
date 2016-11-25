@@ -22,10 +22,10 @@ class Flake < ActiveJob::Base
     flake = new
     flake.send(:active_job_initialize, args)
 
-    if queue_adapter.class.name.demodulize == "ResqueAdapter"
-      flake.enqueue(options)
-    else
+    if queue_adapter.class.name.demodulize == "InlineAdapter"
       flake.enqueue
+    else
+      flake.enqueue(options)
     end
   end
 
