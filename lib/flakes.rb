@@ -68,7 +68,7 @@ class Flake < ActiveJob::Base
     else
       @success ||= default_success
       @success.call(*args)
-      return args.first
+      args.first
     end
   end
 
