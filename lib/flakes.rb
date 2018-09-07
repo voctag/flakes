@@ -18,7 +18,7 @@ class Flake < ActiveJob::Base
     options = {}
     options[:wait] = args.delete(:wait) if args.key?(:wait)
 
-    # initialize ActiveJob::Core only when Flake is enqueued to prevent conflics whith ActiveModel
+    # initialize ActiveJob::Core only when Flake is enqueued to prevent conflics with ActiveModel::Model
     flake = new
     flake.send(:active_job_initialize, args)
 

@@ -1,7 +1,7 @@
 Gem::Specification.new do |spec|
   spec.name        = "flakes"
-  spec.version     = "0.3.5"
-  spec.date        = "2016-11-25"
+  spec.version     = "0.4.0"
+  spec.date        = "2018-09-07"
   spec.summary     = "flakes"
   spec.description = "business logic framework for rails"
   spec.authors     = ["Manuel Schiner"]
@@ -10,13 +10,12 @@ Gem::Specification.new do |spec|
   spec.homepage    = "https://github.com/maschiner/flakes"
   spec.license     = "MIT"
 
-  spec.add_runtime_dependency "activemodel", "~> 5.0"
-  spec.add_runtime_dependency "activejob", "~> 5.0"
+  spec.add_runtime_dependency "rails", "~> 5.2"
 
-  spec.add_development_dependency "bundler", "~> 1.12"
-  spec.add_development_dependency "rake", "~> 11.1"
-  spec.add_development_dependency "rspec", "~> 3.5"
-  spec.add_development_dependency "rubocop", "~> 0.41"
+  spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "guard", "~> 2.14"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
+  spec.add_development_dependency "rake", "~> 12.3"
+  spec.add_development_dependency "rspec", "~> 3.8"
+  spec.add_development_dependency "rubocop", "~> 0.58"
 end
