@@ -87,7 +87,7 @@ class Flake < ActiveJob::Base
       obj = args || self
 
       raise(Error, obj.errors.full_messages) if obj.respond_to?(:errors)
-      raise(Error, obj.full_messages) if obj.is_a?(ActiveModel::Errors)
+      raise(Error, obj.errors.full_messages) if obj.is_a?(ActiveModel::Errors)
       raise(Error, obj.inspect)
     end
   end
