@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.description = "business logic framework for rails"
   spec.authors     = ["Manuel Schiner"]
   spec.email       = "maschiner@maschiner.com"
-  spec.files       = ["lib/flakes.rb"]
+  spec.files       = ["lib/flake.rb", "lib/flake/error.rb"]
   spec.homepage    = "https://github.com/voctag/flakes"
   spec.license     = "MIT"
 
