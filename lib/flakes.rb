@@ -7,9 +7,6 @@ class Flake < ActiveJob::Base
 
   autoload :Error
 
-  class Error < StandardError
-  end
-
   # alias ActiveJob::Core#initialize before it is overwritten by ActiveModel::Model
   alias_method :active_job_initialize, :initialize
 
