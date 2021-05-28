@@ -1,7 +1,12 @@
 require "active_job"
 require "active_model"
+require "active_support"
 
 class Flake < ActiveJob::Base
+  extend ActiveSupport::Autoload
+
+  autoload :Error
+
   class Error < StandardError
   end
 
