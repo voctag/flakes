@@ -10,12 +10,12 @@ Gem::Specification.new do |spec|
   spec.homepage    = "https://github.com/voctag/flakes"
   spec.license     = "MIT"
 
-  spec.add_runtime_dependency "rails", ">= 5.2"
+  spec.add_runtime_dependency "rails", '~> 6.1.3', '>= 6.1.3.1'
 
-  spec.add_development_dependency "bundler", "~> 1.16"
+  spec.add_development_dependency "bundler", "~> 1.16.4"
   spec.add_development_dependency "guard", "~> 2.14"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
   spec.add_development_dependency "rake", "~> 12.3"
-  spec.add_development_dependency "rspec", "~> 3.8"
+  spec.add_development_dependency "rspec", "~> 3.10"
   spec.add_development_dependency "rubocop", "~> 0.58"
 end
