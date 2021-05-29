@@ -1,12 +1,12 @@
 Gem::Specification.new do |spec|
   spec.name        = "flakes"
-  spec.version     = "0.5.4"
+  spec.version     = "0.6.0"
   spec.date        = "2021-04-22"
   spec.summary     = "flakes"
   spec.description = "business logic framework for rails"
   spec.authors     = ["Manuel Schiner"]
   spec.email       = "maschiner@maschiner.com"
-  spec.files       = ["lib/flake.rb", "lib/flake/error.rb"]
+  spec.files       = ["lib/flake.rb", "lib/flakes/error.rb", "lib/flakes.rb"]
   spec.homepage    = "https://github.com/voctag/flakes"
   spec.license     = "MIT"
 

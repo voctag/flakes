@@ -2,15 +2,17 @@ require "active_job"
 require "active_model"
 require "active_support"
 
-class Flake < ActiveJob::Base
+module Flakes
+  extend ActiveSupport::Autoload
+
+  autoload :Error, 'flake/error'
+
+  class Flake < ActiveJob::Base
   # alias ActiveJob::Core#initialize before it is overwritten by ActiveModel::Model
   alias_method :active_job_initialize, :initialize
 
   include ActiveModel::Model
   include ActiveModel::Validations
-  extend ActiveSupport::Autoload
-
-  autoload :Error
 
   def self.execute(args = {})
     new(args).execute
@@ -93,4 +95,5 @@ class Flake < ActiveJob::Base
       raise(Error, obj.inspect)
     end
   end
+end
 end
