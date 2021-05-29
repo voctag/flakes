@@ -7,6 +7,7 @@ class Flake < ActiveJob::Base
   alias_method :active_job_initialize, :initialize
 
   include ActiveModel::Model
+  include ActiveModel::Validations
   extend ActiveSupport::Autoload
 
   autoload :Error
