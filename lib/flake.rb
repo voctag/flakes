@@ -6,7 +6,7 @@ class Flake < ActiveJob::Base
   # alias ActiveJob::Core#initialize before it is overwritten by ActiveModel::Model
   alias_method :active_job_initialize, :initialize
 
-  include ::ActiveModel::Model
+  include ActiveModel::Model
   extend ActiveSupport::Autoload
 
   autoload :Error
