@@ -5,7 +5,7 @@ require "active_support"
 module Flakes
   extend ActiveSupport::Autoload
 
-  autoload :Error, 'flake/error'
+  autoload :Error, 'flakes/error'
 
   class Flake < ActiveJob::Base
   # alias ActiveJob::Core#initialize before it is overwritten by ActiveModel::Model
